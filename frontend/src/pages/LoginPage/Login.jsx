@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import "./Login.css";
 import { FaLock } from "react-icons/fa";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -17,10 +19,23 @@ function Login() {
         "http://localhost:5000/api/auth/login",
         { email, password }
       );
-      localStorage.setItem("token", data.token);
-      navigate("/");
+      login(data.token, data.refreshToken, data.user);
+      
+      // Redirect based on role
+      if (data.user.role === "super_admin") {
+        navigate("/super-admin");
+      } else if (data.user.role === "admin") {
+        navigate("/admin");
+      } else if (data.user.role === "manager") {
+        navigate("/manager");
+      } else if (data.user.role === "hr") {
+        navigate("/hr");
+      } else {
+        navigate("/");
+      }
     } catch (error) {
-      alert("Invalid credentials");
+      const message = error.response?.data?.message || "Invalid credentials";
+      alert(message);
     }
   };
 

@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import Logo from "../assets/logo.svg";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { TbListDetails } from "react-icons/tb";
@@ -23,7 +22,7 @@ const Navbar = () => {
       <div className="container">
         <div className="menus">
           <Link to={"/"}>
-            <img src={Logo} alt="Logo" />
+            <h2 style={{color: 'var(--accent-cyan)', fontFamily: 'Rajdhani', letterSpacing: '1px'}}>EAS</h2>
           </Link>
           <nav>
             <ul className={isOpen ? "display" : ""}>
@@ -41,11 +40,61 @@ const Navbar = () => {
                 </li>
               )}
 
-              {user?.role === "admin" && (
+              {user && (user.role === "super_admin" || user.role === "admin") && (
                 <li>
                   <NavLink to={"/admin"}>
                     <div className="nav-item">
                       <MdOutlineAdminPanelSettings className="nav-icn" /> Admin
+                    </div>
+                  </NavLink>
+                </li>
+              )}
+
+              {user?.role === "manager" && (
+                <li>
+                  <NavLink to={"/manager"}>
+                    <div className="nav-item">
+                      <MdOutlineAdminPanelSettings className="nav-icn" /> Manager
+                    </div>
+                  </NavLink>
+                </li>
+              )}
+
+              {user?.role === "hr" && (
+                <li>
+                  <NavLink to={"/hr"}>
+                    <div className="nav-item">
+                      <MdOutlineAdminPanelSettings className="nav-icn" /> HR
+                    </div>
+                  </NavLink>
+                </li>
+              )}
+
+              {user && (
+                <li>
+                  <NavLink to={"/profile"}>
+                    <div className="nav-item">
+                      <HiOutlineUserAdd className="nav-icn" /> Profile
+                    </div>
+                  </NavLink>
+                </li>
+              )}
+
+              {user && (
+                <li>
+                  <NavLink to={"/reports"}>
+                    <div className="nav-item">
+                      <TbListDetails className="nav-icn" /> Reports
+                    </div>
+                  </NavLink>
+                </li>
+              )}
+
+              {user && user.role !== "employee" && (
+                <li>
+                  <NavLink to={"/secret-keys"}>
+                    <div className="nav-item">
+                      <MdOutlineAdminPanelSettings className="nav-icn" /> Secret Keys
                     </div>
                   </NavLink>
                 </li>

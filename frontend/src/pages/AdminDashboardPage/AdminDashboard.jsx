@@ -24,9 +24,10 @@ const AdminDashboard = () => {
     }
 
     const user = jwtDecode(token);
-    if (user.role !== "admin") {
-      alert("Access denied. Admins only.");
-      return navigate("/");
+    // Allow both admin and super_admin to access admin dashboard
+    if (user.role !== "admin" && user.role !== "super_admin") {
+      navigate("/");
+      return;
     }
 
     fetchUsers();
@@ -152,13 +153,19 @@ const AdminDashboard = () => {
                 <li key={user._id} className="user-item">
                   <span className="user-name">{user.name}</span>
                   <span className="user-email">{user.email}</span>
+                  {user.classroom && (
+                    <span className="classroom-tag">Classroom: {user.classroom}</span>
+                  )}
                   <select
                     value={user.role}
                     onChange={(e) => changeUserRole(user._id, e.target.value)}
                     className="input-select"
                   >
                     <option value="employee">Employee</option>
+                    <option value="hr">HR</option>
+                    <option value="manager">Manager</option>
                     <option value="admin">Admin</option>
+                    <option value="super_admin">Super Admin</option>
                   </select>
                   <button
                     className="btn-delete"

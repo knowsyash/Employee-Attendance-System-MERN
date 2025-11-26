@@ -10,10 +10,20 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("employee");
+  const [secretKey, setSecretKey] = useState("");
   const navigate = useNavigate();
+
+  // Check if selected role requires secret key (super_admin removed - backend only)
+  const requiresSecretKey = ["admin", "manager", "hr"].includes(role);
 
   const handleRegister = async (event) => {
     event.preventDefault();
+
+    // Validate secret key if required
+    if (requiresSecretKey && !secretKey) {
+      alert("Secret key is required to register as " + role);
+      return;
+    }
 
     try {
       await axios.post("http://localhost:5000/api/auth/register", {
@@ -21,11 +31,12 @@ const Register = () => {
         email,
         password,
         role,
+        secretKey: requiresSecretKey ? secretKey : undefined,
       });
       alert("Registration Successful!");
       navigate("/");
     } catch (error) {
-      alert("Registration Failed: " + error.response.data.message);
+      alert("Registration Failed: " + (error.response?.data?.message || error.message || "Unknown error"));
     }
   };
 
@@ -64,10 +75,51 @@ const Register = () => {
             />
             <FaLock className="icon" />
           </div>
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
-            <option value="employee">Employee</option>
-            <option value="admin">Admin</option>
+          <label style={{ 
+            color: '#0bc5ea', 
+            fontSize: '12px', 
+            fontWeight: '600', 
+            textTransform: 'uppercase', 
+            letterSpacing: '1px',
+            marginBottom: '8px',
+            display: 'block'
+          }}>
+            SELECT ROLE
+          </label>
+          <select 
+            value={role} 
+            onChange={(e) => {
+              setRole(e.target.value);
+              setSecretKey(""); // Clear secret key when role changes
+            }}
+            style={{
+              backgroundColor: '#2d3748',
+              color: '#ffffff'
+            }}
+          >
+            <option value="employee" style={{ backgroundColor: '#2d3748', color: '#ffffff' }}>Employee</option>
+            <option value="hr" style={{ backgroundColor: '#2d3748', color: '#ffffff' }}>HR</option>
+            <option value="manager" style={{ backgroundColor: '#2d3748', color: '#ffffff' }}>Manager</option>
+            <option value="admin" style={{ backgroundColor: '#2d3748', color: '#ffffff' }}>Admin</option>
+            {/* Super Admin removed - can only be created from backend */}
           </select>
+          
+          {requiresSecretKey && (
+            <div className="input-box">
+              <input
+                type="password"
+                placeholder="Secret Key (Required for elevated roles)"
+                value={secretKey}
+                onChange={(e) => setSecretKey(e.target.value)}
+                required
+              />
+              <FaLock className="icon" />
+              <small style={{ color: "#666", fontSize: "12px", marginTop: "4px", display: "block" }}>
+                A secret key is required to register as {role}
+              </small>
+            </div>
+          )}
+          
           <button type="submit">Sign Up</button>
           <div className="register-link">
             <p>

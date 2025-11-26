@@ -2,8 +2,94 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
+  z-index: 1;
 }
 
 .content-wrap {
   flex: 1;
+  padding: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Glass Morphism Effect */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-2px);
+}
+
+/* Metallic Button */
+.metallic-btn {
+  background: var(--metallic-gradient);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  font-family: "Rajdhani", sans-serif;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.metallic-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--shine-gradient);
+  transition: left 0.5s ease;
+}
+
+.metallic-btn:hover::before {
+  left: 100%;
+}
+
+.metallic-btn:hover {
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(11, 197, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+.metallic-btn:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .content-wrap {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-wrap {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-wrap {
+    padding: 8px;
+  }
 }

@@ -3,45 +3,97 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
-  color: #fff;
+  width: 440px;
+  max-width: 95%;
+  color: var(--text-primary);
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  border-radius: 10px;
-  background: transparent;
-  padding: 30px 40px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(50px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  padding: 50px 45px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-xl);
+  animation: fadeInScale 0.5s ease-out;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.wrapper:hover::before {
+  opacity: 0.5;
 }
 
 .wrapper h2 {
-  font-size: 36px;
+  font-size: 38px;
+  font-weight: 700;
   text-align: center;
+  margin-bottom: 10px;
+  font-family: "Rajdhani", sans-serif;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .wrapper .input-box {
   position: relative;
   width: 100%;
-  height: 50px;
+  height: 55px;
   margin: 30px 0;
 }
 
 .input-box input {
   width: 100%;
   height: 100%;
-  background: transparent;
+  background: rgba(45, 55, 72, 0.3);
   outline: none;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 40px;
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
   font-size: 16px;
-  color: #fff;
-  padding: 20px 45px 20px 20px;
+  color: var(--text-primary);
+  padding: 20px 50px 20px 20px;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.input-box input:focus {
+  background: rgba(45, 55, 72, 0.5);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 20px rgba(11, 197, 234, 0.2);
 }
 
 .input-box input::placeholder {
-  color: #fff;
+  color: var(--text-secondary);
 }
 
 .input-box .icon {
@@ -49,63 +101,145 @@
   right: 20px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 16px;
-  color: #fff;
+  font-size: 18px;
+  color: var(--accent-grey);
+  transition: color 0.3s ease;
+}
+
+.input-box input:focus + .icon {
+  color: var(--accent-cyan);
 }
 
 .wrapper .remember-forgot {
   display: flex;
   justify-content: space-between;
-  font-size: 14.5px;
-  margin: -15px 0 15px;
+  font-size: 14px;
+  margin: -15px 0 25px;
+}
+
+.remember-forgot label {
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.remember-forgot label:hover {
+  color: var(--text-primary);
 }
 
 .remember-forgot label input {
-  accent-color: #fff;
-  margin-right: 4px;
+  accent-color: var(--accent-cyan);
+  margin-right: 6px;
+  cursor: pointer;
 }
 
 .remember-forgot a {
-  color: #fff;
+  color: var(--accent-cyan);
   text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
 }
 
 .remember-forgot a:hover {
+  color: var(--accent-blue);
   text-decoration: underline;
 }
 
 .wrapper button {
   width: 100%;
-  height: 45px;
-  background: #fff;
-  border: none;
+  height: 52px;
+  background: var(--metallic-gradient);
+  border: 1px solid var(--glass-border);
   outline: none;
-  border-radius: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
   cursor: pointer;
-  color: #333;
+  color: var(--text-primary);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 17px;
+  font-family: "Rajdhani", sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wrapper button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--shine-gradient);
+  transition: left 0.5s ease;
+}
+
+.wrapper button:hover::before {
+  left: 100%;
 }
 
 .wrapper button:hover {
-  background: #1d70dbde;
-  color: #fff;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 30px rgba(11, 197, 234, 0.4);
+  transform: translateY(-2px);
+}
+
+.wrapper button:active {
+  transform: translateY(0);
 }
 
 .wrapper .register-link {
-  font-size: 14.5px;
+  font-size: 15px;
   text-align: center;
-  margin: 20px 0 15px;
+  margin: 25px 0 0;
+  color: var(--text-secondary);
 }
 
 .register-link p a {
-  color: #fff;
+  color: var(--accent-cyan);
   text-decoration: none;
   font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .register-link p a:hover {
+  color: var(--accent-blue);
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    width: 420px;
+    padding: 45px 40px;
+  }
+
+  .wrapper h2 {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    width: 90%;
+    padding: 40px 30px;
+  }
+
+  .wrapper h2 {
+    font-size: 30px;
+  }
+
+  .input-box {
+    height: 50px;
+    margin: 25px 0;
+  }
+
+  .wrapper button {
+    height: 48px;
+    font-size: 16px;
+  }
 }

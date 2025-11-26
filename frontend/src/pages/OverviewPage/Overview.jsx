@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import moment from "moment";
+import { AuthContext } from "../../context/AuthContext";
+import CheckInOut from "../../components/CheckInOut";
 import "./Overview.css";
 
 function Overview() {
+  const { user } = useContext(AuthContext);
   const [summary, setSummary] = useState({});
   const [attendanceDetails, setAttendanceDetails] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(moment().format("MM"));
@@ -25,6 +28,7 @@ function Overview() {
       setLoading(true);
       axios
         .get(`http://localhost:5000/api/attendance/summary/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
           params: { year: selectedYear, month: selectedMonth },
         })
         .then(({ data }) => {
@@ -33,7 +37,13 @@ function Overview() {
         })
         .catch((err) => {
           console.error("Error fetching attendance summary:", err);
-          alert("Failed to fetch attendance data. Please try again later.");
+          // Only show alert for actual errors, not 404s (no data yet)
+          if (err.response?.status !== 404) {
+            alert("Failed to fetch attendance data. Please try again later.");
+          } else {
+            // No attendance data yet, set empty summary
+            setSummary({});
+          }
           setLoading(false);
         });
     };
@@ -46,11 +56,12 @@ function Overview() {
 
       axios
         .get(`http://localhost:5000/api/attendance/details/${userId}`, {
+          headers: { Authorization: `Bearer ${token}` },
           params: { year: selectedYear, month: selectedMonth },
         })
         .then(({ data }) => {
           console.log("Fetched Attendance Data:", data);
-          setAttendanceDetails(data);
+          setAttendanceDetails(data || []);
           setLoading(false);
         })
         .catch((err) => {
@@ -58,12 +69,21 @@ function Overview() {
             "Error fetching daily attendance:",
             err.response?.data || err.message
           );
+          // Set empty array if no data
+          setAttendanceDetails([]);
           setLoading(false);
         });
     };
 
     try {
-      const userId = jwtDecode(token).id;
+      const decoded = jwtDecode(token);
+      // Try both _id and id from token
+      const userId = decoded._id || decoded.id || decoded.userId;
+      if (!userId) {
+        console.error("No user ID found in token");
+        navigate("/login");
+        return;
+      }
       fetchAttendanceSummary(userId);
       fetchDailyAttendance(userId);
     } catch (err) {
@@ -94,6 +114,8 @@ function Overview() {
 
   return (
     <div className="overview-container">
+      {user && user.role === "employee" && <CheckInOut />}
+      
       <div className="filter-container">
         <label>Year:</label>
         <select
@@ -123,7 +145,10 @@ function Overview() {
       </div>
 
       {loading ? (
-        <p>Loading...</p>
+        <div className="loading-spinner-container">
+          <div className="spinner"></div>
+          <p>Loading attendance data...</p>
+        </div>
       ) : (
         <table className="attendance-table">
           <thead>

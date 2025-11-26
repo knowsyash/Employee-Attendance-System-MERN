@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaGithub, FaTwitter, FaLinkedin, FaFacebook } from "react-icons/fa";
-import LogoFooter from "../assets/logo.svg";
 import "./Footer.css";
 
 const Footer = () => {
@@ -13,7 +12,7 @@ const Footer = () => {
         <div className="footer-section">
           <div className="logo-section">
             <Link to={"/"}>
-              <img src={LogoFooter} alt="LogoFooter" />
+              <h2 style={{color: 'var(--accent-cyan)', fontFamily: 'Rajdhani', letterSpacing: '1px'}}>EAS</h2>
             </Link>
           </div>
           <p className="footer-description">
