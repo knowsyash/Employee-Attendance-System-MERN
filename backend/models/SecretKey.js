@@ -29,8 +29,7 @@ const SecretKeySchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-// Index for faster lookups
-SecretKeySchema.index({ key: 1 });
+// Index for faster lookups (key already has unique index from schema definition)
 SecretKeySchema.index({ role: 1, isActive: 1 });
 
 module.exports = mongoose.model("SecretKey", SecretKeySchema);

@@ -1,7 +1,8 @@
 .admin-container {
   min-height: calc(100vh - 80px);
-  padding: 2rem;
+  padding: 3rem 2rem;
   animation: fadeIn 0.5s ease;
+  background: linear-gradient(135deg, rgba(10, 25, 47, 0.9) 0%, rgba(16, 37, 60, 0.9) 100%);
 }
 
 @keyframes fadeIn {
@@ -10,15 +11,20 @@
 }
 
 h3 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  background: linear-gradient(135deg, #0BC5EA 0%, #0891B2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   font-family: 'Rajdhani', sans-serif;
-  letter-spacing: 1px;
-  margin-bottom: 1.5rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(11, 197, 234, 0.2);
+  text-transform: uppercase;
 }
 
 .attendance-heading {
@@ -26,14 +32,14 @@ h3 {
 }
 
 .admin-dashboard {
-  max-width: 1400px;
+  max-width: 800px;
   margin: 0 auto;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  padding: 2.5rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(11, 197, 234, 0.2);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(11, 197, 234, 0.1);
 }
 
 .user-list {
@@ -41,59 +47,177 @@ h3 {
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 1rem;
+  gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
-.user-item {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
+.user-actions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: all 0.3s ease;
-  flex-wrap: wrap;
   gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(11, 197, 234, 0.15);
+}
+
+.user-item {
+  background: linear-gradient(135deg, rgba(11, 197, 234, 0.08) 0%, rgba(8, 145, 178, 0.08) 100%);
+  border: 1px solid rgba(11, 197, 234, 0.25);
+  border-radius: 16px;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
 }
 
 .user-item:hover {
-  background: rgba(11, 197, 234, 0.1);
-  border-color: var(--accent-cyan);
-  transform: translateX(5px);
+  background: linear-gradient(135deg, rgba(11, 197, 234, 0.12) 0%, rgba(8, 145, 178, 0.12) 100%);
+  border-color: rgba(11, 197, 234, 0.6);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(11, 197, 234, 0.25);
+}
+
+.user-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #0BC5EA 0%, #0891B2 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.user-item:hover::before {
+  opacity: 1;
 }
 
 .user-item span {
-  color: var(--text-primary);
+  color: #e5e7eb;
   font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.user-name {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.user-email {
+  color: #94a3b8 !important;
+  font-size: 0.95rem !important;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.classroom-tag {
+  display: inline-block;
+  background: rgba(11, 197, 234, 0.15);
+  border: 1px solid rgba(11, 197, 234, 0.3);
+  color: #0BC5EA !important;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.user-item .input-select {
+  flex: 1;
+  max-width: 250px;
+  height: 48px;
+  background: rgba(11, 197, 234, 0.1);
+  border: 1.5px solid rgba(11, 197, 234, 0.3);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0 1.5rem;
+  color: #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+.user-item .input-select:hover {
+  background: rgba(11, 197, 234, 0.15);
+  border-color: rgba(11, 197, 234, 0.5);
+}
+
+.user-item .input-select:focus {
+  outline: none;
+  border-color: #0BC5EA;
+  background: rgba(11, 197, 234, 0.2);
+  box-shadow: 0 0 0 3px rgba(11, 197, 234, 0.15);
+}
+
+.user-item .btn-delete {
+  padding: 0.75rem 2rem;
+  min-width: 120px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.user-item .btn-delete:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+}
+
+.user-item .btn-delete:active {
+  transform: translateY(0);
 }
 
 .form-group {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
   margin: 2rem 0;
+  padding: 0;
+  max-width: 100%;
 }
 
 .form-group-btn {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 0;
   margin-top: 2rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .form-group select,
 .input-select,
 .role-select {
   width: 100%;
-  height: 50px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: 70px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(11, 197, 234, 0.3);
   border-radius: 12px;
-  font-size: 1rem;
-  padding: 0 1.25rem;
-  color: var(--text-primary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0 2rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
   transition: all 0.3s ease;
   cursor: pointer;
 }
@@ -110,8 +234,20 @@ h3 {
 .form-group select option,
 .input-select option,
 .role-select option {
-  background: var(--bg-secondary);
-  color: var(--text-primary);
+  background: #1a1a2e !important;
+  background-color: #1a1a2e !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  padding: 1rem !important;
+  font-size: 1.1rem !important;
+}
+
+.form-group select option:hover,
+.input-select option:hover,
+.role-select option:hover {
+  background: #0BC5EA !important;
+  background-color: #0BC5EA !important;
+  color: #000000 !important;
 }
 
 /* React DatePicker Styling */
@@ -141,39 +277,42 @@ h3 {
 
 .btn-fetch {
   width: auto;
-  min-width: 150px;
-  padding: 0.875rem 2rem;
+  min-width: 180px;
+  padding: 1rem 2.5rem;
   border: none;
-  border-radius: 12px;
-  font-size: 1rem;
+  border-radius: 14px;
+  font-size: 0.95rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-  color: white;
-  box-shadow: 0 4px 15px rgba(11, 197, 234, 0.3);
+  background: linear-gradient(135deg, #0BC5EA 0%, #0891B2 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(11, 197, 234, 0.4);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-fetch:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(11, 197, 234, 0.5);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(11, 197, 234, 0.6);
+  background: linear-gradient(135deg, #06B6D4 0%, #0E7490 100%);
 }
 
 .btn-delete {
-  padding: 0.6rem 1.2rem;
+  padding: 0.75rem 1.5rem;
   border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: white;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(239, 68, 68, 0.4);
 }
 
 .btn-delete:hover {

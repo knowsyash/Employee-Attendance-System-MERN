@@ -1,0 +1,3 @@
+node scripts/createSuperAdmin.js "New Super Admin" "newadmin@example.com" "NewAdmin@123" "SA002" "IT" "System Administrator" "HQ" "+9876543210"
+
+node scripts/createSuperAdmin.js "Super Admin 2" "superadmin2@company.com" "SuperPass@456" "SA003" "Administration" "Super Administrator"
