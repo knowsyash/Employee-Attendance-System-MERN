@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import API_URL from "../../config";
 import "./ResetPasswordPage.css";
 
 const ResetPasswordPage = () => {
