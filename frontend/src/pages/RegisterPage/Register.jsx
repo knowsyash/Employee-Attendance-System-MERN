@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import API_URL from "../../config";
 import "./Register.css";
 
 const Register = () => {
@@ -26,7 +27,7 @@ const Register = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post(`${API_URL}/api/auth/register`, {
         name,
         email,
         password,

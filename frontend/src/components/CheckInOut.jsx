@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import { jwtDecode } from "jwt-decode";
+import API_URL from "../config";
 import "./CheckInOut.css";
 
 const CheckInOut = () => {
@@ -16,7 +17,7 @@ const CheckInOut = () => {
 
   const fetchTodayStatus = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/attendance/today", {
+      const response = await axios.get(`${API_URL}/api/attendance/today`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setAttendance(response.data);
@@ -31,7 +32,7 @@ const CheckInOut = () => {
     setActionLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/attendance/check-in",
+        `${API_URL}/api/attendance/check-in`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -50,7 +51,7 @@ const CheckInOut = () => {
     setActionLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/attendance/check-out",
+        `${API_URL}/api/attendance/check-out`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -69,7 +70,7 @@ const CheckInOut = () => {
     setActionLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/attendance/break-start",
+        `${API_URL}/api/attendance/break-start`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -88,7 +89,7 @@ const CheckInOut = () => {
     setActionLoading(true);
     try {
       await axios.post(
-        "http://localhost:5000/api/attendance/break-end",
+        `${API_URL}/api/attendance/break-end`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

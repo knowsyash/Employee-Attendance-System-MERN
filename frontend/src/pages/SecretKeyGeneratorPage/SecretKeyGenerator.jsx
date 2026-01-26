@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import API_URL from "../../config";
 import "./SecretKeyGenerator.css";
 
 const SecretKeyGenerator = () => {
@@ -21,7 +22,7 @@ const SecretKeyGenerator = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/auth/me", {
+      const response = await axios.get(`${API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUserInfo(response.data);
@@ -36,7 +37,7 @@ const SecretKeyGenerator = () => {
   const fetchGeneratableRoles = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/secret-keys/generatable-roles",
+        `${API_URL}/api/secret-keys/generatable-roles`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -54,7 +55,7 @@ const SecretKeyGenerator = () => {
     setKeysLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/secret-keys/my-keys",
+        `${API_URL}/api/secret-keys/my-keys`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -83,7 +84,7 @@ const SecretKeyGenerator = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/secret-keys/generate",
+        `${API_URL}/api/secret-keys/generate`,
         {
           role: selectedRole,
           classroom: selectedRole === "admin" ? classroom : (userInfo?.classroom || null),
@@ -108,7 +109,7 @@ const SecretKeyGenerator = () => {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/secret-keys/${keyId}/deactivate`,
+        `${API_URL}/api/secret-keys/${keyId}/deactivate`,
         {},
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
+import API_URL from "../config";
 
 export const AuthContext = createContext();
 
@@ -19,7 +20,7 @@ export const AuthProvider = ({ children }) => {
           
           // Try to get fresh user data (silently, no error alerts)
           try {
-            const response = await axios.get("http://localhost:5000/api/auth/me", {
+            const response = await axios.get(`${API_URL}/api/auth/me`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             setUser(response.data);
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
             // If token expired, try refresh (silently)
             if (refreshToken && err.response?.status === 401) {
               try {
-                const refreshResponse = await axios.post("http://localhost:5000/api/auth/refresh", {
+                const refreshResponse = await axios.post(`${API_URL}/api/auth/refresh`, {
                   refreshToken
                 });
                 localStorage.setItem("token", refreshResponse.data.token);

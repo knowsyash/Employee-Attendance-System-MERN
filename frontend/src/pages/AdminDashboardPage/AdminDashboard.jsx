@@ -3,6 +3,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
+import API_URL from "../../config";
 import "react-datepicker/dist/react-datepicker.css";
 import "./AdminDashboard.css";
 
@@ -35,7 +36,7 @@ const AdminDashboard = () => {
 
   const fetchUsers = () => {
     axios
-      .get("http://localhost:5000/api/admin/users", {
+      .get(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then(({ data }) => setUsers(data))
@@ -46,7 +47,7 @@ const AdminDashboard = () => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
+      await axios.delete(`${API_URL}/api/admin/users/${userId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       alert("User and their attendance records deleted successfully!");
@@ -60,7 +61,7 @@ const AdminDashboard = () => {
   const changeUserRole = async (userId, newRole) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/users/${userId}/role`,
+        `${API_URL}/api/admin/users/${userId}/role`,
         { role: newRole },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -76,7 +77,7 @@ const AdminDashboard = () => {
 
   const fetchAttendance = () => {
     axios
-      .get("http://localhost:5000/api/admin/attendance", {
+      .get(`${API_URL}/api/admin/attendance`, {
         params: {
           userId: selectedUser,
           date: selectedDate.toISOString().split("T")[0],
@@ -89,7 +90,7 @@ const AdminDashboard = () => {
   const addAttendance = async () => {
     try {
       await axios.post(
-        "http://localhost:5000/api/admin/attendance",
+        `${API_URL}/api/admin/attendance`,
         {
           userId: selectedUser,
           date: selectedDate.toISOString().split("T")[0],
@@ -112,7 +113,7 @@ const AdminDashboard = () => {
 
   const fetchAllAttendance = () => {
     axios
-      .get("http://localhost:5000/api/admin/attendance/all", {
+      .get(`${API_URL}/api/admin/attendance/all`, {
         params: { userId: selectedUser },
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
@@ -128,7 +129,7 @@ const AdminDashboard = () => {
 
   const deleteAttendance = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/attendance/${id}`, {
+      await axios.delete(`${API_URL}/api/admin/attendance/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

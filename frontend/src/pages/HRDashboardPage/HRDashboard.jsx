@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import API_URL from "../../config";
 import "react-datepicker/dist/react-datepicker.css";
 import "./HRDashboard.css";
 
@@ -19,7 +20,7 @@ const HRDashboard = () => {
 
   const fetchUserInfo = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/auth/me", {
+      const response = await axios.get(`${API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUserInfo(response.data);
@@ -40,7 +41,7 @@ const HRDashboard = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/users", {
+      const response = await axios.get(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUsers(response.data);
@@ -53,7 +54,7 @@ const HRDashboard = () => {
 
   const fetchAttendance = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/attendance", {
+      const response = await axios.get(`${API_URL}/api/admin/attendance`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         params: {
           userId: selectedUser,
@@ -74,7 +75,7 @@ const HRDashboard = () => {
 
     try {
       await axios.post(
-        "http://localhost:5000/api/admin/attendance",
+        `${API_URL}/api/admin/attendance`,
         {
           userId: selectedUser,
           date: selectedDate.toISOString().split("T")[0],

@@ -4,6 +4,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
+import API_URL from "../../config";
 import CheckInOut from "../../components/CheckInOut";
 import "./Overview.css";
 
@@ -27,7 +28,7 @@ function Overview() {
     const fetchAttendanceSummary = (userId) => {
       setLoading(true);
       axios
-        .get(`http://localhost:5000/api/attendance/summary/${userId}`, {
+        .get(`${API_URL}/api/attendance/summary/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
           params: { year: selectedYear, month: selectedMonth },
         })
@@ -55,7 +56,7 @@ function Overview() {
       );
 
       axios
-        .get(`http://localhost:5000/api/attendance/details/${userId}`, {
+        .get(`${API_URL}/api/attendance/details/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
           params: { year: selectedYear, month: selectedMonth },
         })

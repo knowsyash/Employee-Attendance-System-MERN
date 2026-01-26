@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import API_URL from "../../config";
 import "./SuperAdminDashboard.css";
 
 const SuperAdminDashboard = () => {
@@ -28,7 +29,7 @@ const SuperAdminDashboard = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/users", {
+      const response = await axios.get(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setUsers(response.data);
@@ -46,7 +47,7 @@ const SuperAdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/attendance", {
+      const response = await axios.get(`${API_URL}/api/admin/attendance`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setStats((prev) => ({
@@ -74,7 +75,7 @@ const SuperAdminDashboard = () => {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/users/${selectedUser._id}`,
+        `${API_URL}/api/admin/users/${selectedUser._id}`,
         editForm,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -92,7 +93,7 @@ const SuperAdminDashboard = () => {
     if (!window.confirm("Are you sure you want to deactivate this user?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
+      await axios.delete(`${API_URL}/api/admin/users/${userId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       alert("User deactivated successfully!");
@@ -105,7 +106,7 @@ const SuperAdminDashboard = () => {
   const handleRoleChange = async (userId, newRole) => {
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/users/${userId}/role`,
+        `${API_URL}/api/admin/users/${userId}/role`,
         { role: newRole },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import API_URL from "../../config";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
@@ -28,7 +29,7 @@ const ProfilePage = () => {
 
   const fetchProfile = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/auth/me", {
+      const response = await axios.get(`${API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       setProfile(response.data);
@@ -49,7 +50,7 @@ const ProfilePage = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        "http://localhost:5000/api/auth/me",
+        `${API_URL}/api/auth/me`,
         formData,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -81,7 +82,7 @@ const ProfilePage = () => {
 
     try {
       await axios.put(
-        "http://localhost:5000/api/auth/change-password",
+        `${API_URL}/api/auth/change-password`,
         {
           currentPassword: passwordData.currentPassword,
           newPassword: passwordData.newPassword,

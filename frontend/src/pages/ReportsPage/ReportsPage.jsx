@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import moment from "moment";
+import API_URL from "../../config";
 import "./ReportsPage.css";
 
 const ReportsPage = () => {
@@ -21,7 +22,7 @@ const ReportsPage = () => {
     try {
       const userId = user?._id || user?.id;
       const response = await axios.get(
-        `http://localhost:5000/api/attendance/summary/${userId}`,
+        `${API_URL}/api/attendance/summary/${userId}`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           params: { year: selectedYear, month: selectedMonth },

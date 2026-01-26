@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import API_URL from "../../config";
 import "./ManagerDashboard.css";
 
 const ManagerDashboard = () => {
@@ -22,7 +23,7 @@ const ManagerDashboard = () => {
 
   const fetchDepartmentUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/admin/users", {
+      const response = await axios.get(`${API_URL}/api/admin/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         params: { department: user?.department },
       });
@@ -38,7 +39,7 @@ const ManagerDashboard = () => {
   const fetchTodayStats = async () => {
     try {
       const today = new Date().toISOString().split("T")[0];
-      const response = await axios.get("http://localhost:5000/api/admin/attendance", {
+      const response = await axios.get(`${API_URL}/api/admin/attendance`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         params: { date: today },
       });
@@ -57,7 +58,7 @@ const ManagerDashboard = () => {
     if (!selectedUser) return;
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/admin/attendance/all`,
+        `${API_URL}/api/admin/attendance/all`,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
           params: { userId: selectedUser },
