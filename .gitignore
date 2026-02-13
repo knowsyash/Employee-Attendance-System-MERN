@@ -1,9 +1,14 @@
 # dependencies
 /backend/node_modules
 /frontend/node_modules
+/node_modules
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+package-lock.json
+package.json
+test-deployment.js
+
 
 # debug
 npm-debug.log*
